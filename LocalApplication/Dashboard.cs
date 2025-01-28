@@ -787,5 +787,11 @@ namespace LocalApplication
             Operators operators = new Operators(_employee);
             operators.ShowDialog();
         }
+
+        private void btnReplicate_Click(object sender, EventArgs e)
+        {
+            ImportData replicate = new ImportData(_employee);
+            replicate.ShowDialog();
+        }
     }
 }

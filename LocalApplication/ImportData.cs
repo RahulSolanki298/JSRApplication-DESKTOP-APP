@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net.Http;
+using System.Security.Policy;
 using System.Text;
 
 namespace LocalApplication
@@ -20,6 +21,11 @@ namespace LocalApplication
         }
 
         private async void bntUpload_Click(object sender, EventArgs e)
+        {
+            await UploadDataAsync();
+        }
+
+        private async Task UploadDataAsync()
         {
             try
             {
@@ -927,9 +933,9 @@ WHERE bid.Id IS NULL AND imgDT.ReplicateStatus IS NULL AND imgDT.ImageResult IS 
                             Id = Convert.ToInt32(row["Id"]),
                             SoftwareKey = row["SoftwareKey"].ToString(),
                             EmployeeCode = row["EmployeeCode"].ToString(),
-                            FirstName= row["FirstName"].ToString(),
-                            LastName= row["LastName"].ToString(),
-                            MiddleName= row["MiddleName"].ToString(),
+                            FirstName = row["FirstName"].ToString(),
+                            LastName = row["LastName"].ToString(),
+                            MiddleName = row["MiddleName"].ToString(),
                             EmployeeType = row["EmployeeType"].ToString(),
                             EmployeeName = row["EmployeeName"].ToString(),
                             IsActive = Convert.ToBoolean(row["IsActive"]),
@@ -2111,6 +2117,14 @@ WHERE bid.Id IS NULL AND imgDT.ReplicateStatus IS NULL AND imgDT.ImageResult IS 
             var software = GetSoftwareData();
             string softwareKey = software.SoftwareKey;
 
+            await ImportDataInLiveAsync(softwareKey);
+
+            _loader.Visible = false;
+            this.Enabled = true;
+        }
+
+        private async Task ImportDataInLiveAsync(string softwareKey)
+        {
             if (string.IsNullOrEmpty(softwareKey))
             {
                 MessageBox.Show("Please enter a software key.");
@@ -2131,10 +2145,13 @@ WHERE bid.Id IS NULL AND imgDT.ReplicateStatus IS NULL AND imgDT.ImageResult IS 
 
                     var updatedData = JsonConvert.DeserializeObject<ImportAllData>(responseData);
 
-                    for (int i = 1; i <= 11; i++)
+                    for (int i = 0; i <= 11; i++)
                     {
                         switch (i)
                         {
+                            case 0:
+                                await SaveCompanyAsync(updatedData.Company);
+                                break;
                             case 1:
                                 await SaveEmployee(updatedData.CompanyEmployeeList);
                                 break;
@@ -2186,12 +2203,76 @@ WHERE bid.Id IS NULL AND imgDT.ReplicateStatus IS NULL AND imgDT.ImageResult IS 
                     MessageBox.Show($"An error occurred: {ex.Message}", "Error");
                 }
             }
-
-            _loader.Visible = false;
-            this.Enabled = true;
         }
 
         #region Save All Data
+
+        private async Task SaveCompanyAsync(CompanyVM company)
+        {
+            using (var connection = DBHelper.GetConnection())
+            {
+                await connection.OpenAsync();
+
+                // Using statement to ensure the transaction is disposed of properly
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Check if a site with the given ReplicateId exists
+                        using (var cmdCheckExists = new SqlCommand("SELECT COUNT(1) FROM Company WHERE ReplicateId = @ReplicateId AND ReplicateStatus = @ReplicateStatus", connection, transaction))
+                        {
+                            cmdCheckExists.Parameters.Add("@ReplicateId", SqlDbType.VarChar).Value = company.ReplicateId;
+                            cmdCheckExists.Parameters.Add("@ReplicateStatus", SqlDbType.VarChar).Value = company.ReplicateStatus;
+                            int count = (int)await cmdCheckExists.ExecuteScalarAsync();
+
+                            if (count > 0)
+                            {
+                                var compQry = string.Empty;
+
+                                if (company.IsSubscription == true)
+                                {
+                                    compQry = "Update Company set CompanyName=@CompanyName,IsSubscription=@IsSubscription,SubscriptionDays=@SubscriptionDays,RegisterDate=@RegisterDate,ExpiryDate=@ExpiryDate WHERE ReplicateId = @ReplicateId AND ReplicateStatus = @ReplicateStatus;";
+
+                                    using (var cmdUpdateCompany = new SqlCommand(compQry, connection, transaction))
+                                    {
+                                        cmdUpdateCompany.Parameters.Add("@CompanyName", SqlDbType.VarChar).Value = company.CompanyName;
+                                        cmdUpdateCompany.Parameters.Add("@IsSubscription", SqlDbType.Bit).Value = company.IsSubscription;
+                                        cmdUpdateCompany.Parameters.Add("@SubscriptionDays", SqlDbType.Int).Value = company.SubscriptionDays;
+                                        cmdUpdateCompany.Parameters.Add("@RegisterDate", SqlDbType.DateTime).Value = company.RegisterDate;
+                                        cmdUpdateCompany.Parameters.Add("@ExpiryDate", SqlDbType.DateTime).Value = company.ExpiryDate;
+
+                                        await cmdUpdateCompany.ExecuteNonQueryAsync();
+                                    }
+                                }
+
+                                if (company.IsNoOfImages == true)
+                                {
+                                    compQry = "Update Company set CompanyName=@CompanyName,IsNoOfImages=@IsNoOfImages,NoOfImages=@NoOfImages WHERE ReplicateId = @ReplicateId AND ReplicateStatus = @ReplicateStatus;";
+
+                                    using (var cmdUpdateCompany = new SqlCommand(compQry, connection, transaction))
+                                    {
+                                        cmdUpdateCompany.Parameters.Add("@CompanyName", SqlDbType.VarChar).Value = company.CompanyName;
+                                        cmdUpdateCompany.Parameters.Add("@IsNoOfImages", SqlDbType.Bit).Value = company.IsNoOfImages;
+                                        cmdUpdateCompany.Parameters.Add("@NoOfImages", SqlDbType.Int).Value = company.NoOfImages;
+
+                                        await cmdUpdateCompany.ExecuteNonQueryAsync();
+                                    }
+                                }
+                            }
+                        }
+
+
+                        await transaction.CommitAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        await transaction.RollbackAsync();
+                        // Consider logging the exception details here for diagnostics
+                        throw; // Rethrow the exception to preserve the stack trace
+                    }
+                }
+            }
+        }
 
         private async Task SaveSiteAsync(List<SiteVM> sites)
         {
@@ -3499,5 +3580,20 @@ INSERT INTO ImageProcessData (
             }
         }
 
+        private async void btnSync_Click(object sender, EventArgs e)
+        {
+            await UploadDataAsync();
+
+            this.Enabled = false;
+            _loader.Visible = true;
+            var software = GetSoftwareData();
+            string softwareKey = software.SoftwareKey;
+
+            await ImportDataInLiveAsync(softwareKey);
+
+            _loader.Visible = false;
+            this.Enabled = true;
+
+        }
     }
 }

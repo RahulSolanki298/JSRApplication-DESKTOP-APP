@@ -36,6 +36,7 @@
             panel2 = new Panel();
             label19 = new Label();
             dtGridView = new DataGridView();
+            btnSync = new Button();
             ((System.ComponentModel.ISupportInitialize)_loader).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dtGridView).BeginInit();
             SuspendLayout();
@@ -43,7 +44,7 @@
             // bntUpload
             // 
             bntUpload.BackColor = Color.Navy;
-            bntUpload.Font = new Font("Rockwell", 9F, FontStyle.Bold);
+            bntUpload.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
             bntUpload.ForeColor = SystemColors.ControlLightLight;
             bntUpload.Location = new Point(136, 59);
             bntUpload.Name = "bntUpload";
@@ -56,7 +57,7 @@
             // btnImport
             // 
             btnImport.BackColor = Color.Navy;
-            btnImport.Font = new Font("Rockwell", 9F, FontStyle.Bold);
+            btnImport.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
             btnImport.ForeColor = SystemColors.ControlLightLight;
             btnImport.Location = new Point(10, 59);
             btnImport.Name = "btnImport";
@@ -82,7 +83,7 @@
             // _loader
             // 
             _loader.Image = (Image)resources.GetObject("_loader.Image");
-            _loader.Location = new Point(270, 59);
+            _loader.Location = new Point(466, 59);
             _loader.Name = "_loader";
             _loader.Size = new Size(40, 30);
             _loader.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -102,11 +103,11 @@
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new Font("Rockwell", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label19.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label19.ForeColor = SystemColors.GrayText;
             label19.Location = new Point(10, 17);
             label19.Name = "label19";
-            label19.Size = new Size(143, 33);
+            label19.Size = new Size(137, 31);
             label19.TabIndex = 44;
             label19.Text = "Replicate";
             // 
@@ -119,12 +120,26 @@
             dtGridView.Size = new Size(692, 346);
             dtGridView.TabIndex = 45;
             // 
+            // btnSync
+            // 
+            btnSync.BackColor = Color.Navy;
+            btnSync.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
+            btnSync.ForeColor = SystemColors.ControlLightLight;
+            btnSync.Location = new Point(269, 59);
+            btnSync.Name = "btnSync";
+            btnSync.Size = new Size(127, 30);
+            btnSync.TabIndex = 46;
+            btnSync.Text = "Sync Data";
+            btnSync.UseVisualStyleBackColor = false;
+            btnSync.Click += btnSync_Click;
+            // 
             // ImportData
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(714, 453);
+            Controls.Add(btnSync);
             Controls.Add(dtGridView);
             Controls.Add(label19);
             Controls.Add(panel2);
@@ -150,5 +165,6 @@
         private Panel panel2;
         private Label label19;
         private DataGridView dtGridView;
+        private Button btnSync;
     }
 }

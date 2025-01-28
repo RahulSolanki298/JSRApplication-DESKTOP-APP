@@ -14,8 +14,8 @@ namespace LocalApplication
             InitializeComponent();
             this._employee = employee;
             lblProjectId.Text = pId.ToString();
-            txtFromDate.MinDate = DateTime.Today;
-            txtToDate.MinDate = DateTime.Today;
+            //txtFromDate.MinDate = DateTime.Today;
+            //txtToDate.MinDate = DateTime.Today;
 
             txtFromDate.ValueChanged += txtFromDate_ValueChanged;
             BindGrid(null, null, null);

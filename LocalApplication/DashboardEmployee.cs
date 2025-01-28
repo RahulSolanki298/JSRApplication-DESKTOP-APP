@@ -30,7 +30,7 @@ namespace LocalApplication
             pictureBox3.Visible = false;
             _employee = employee;
             _loader.Visible = false;
-            var soft=GetSoftwareData();
+            var soft = GetSoftwareData();
             GetCurrentProject();
             GetSettingData();
             if (lblProjectId.Text == "0")
@@ -78,7 +78,7 @@ namespace LocalApplication
             GetLastInsData();
             if (lblProjectId.Text == "0")
             {
-                
+
                 MessageBox.Show("Please create project or select project from project list.");
             }
         }
@@ -136,13 +136,13 @@ namespace LocalApplication
                             else
                             {
                                 lblOk.Text = "0";
-                                lblDefective.Text="0";
+                                lblDefective.Text = "0";
                                 lblWithinCriteria.Text = "0";
                                 lblPendingCounter.Text = "0";
                                 lblTotal.Text = "0";
                             }
 
-                            
+
                         }
                     }
                 }
@@ -184,7 +184,7 @@ namespace LocalApplication
                                     lblLastImage.Text = row["ImageName"].ToString();
                                 }
 
-                                
+
                                 //IDChanged?.Invoke(this, Convert.ToInt32(lblProjectId.Text));
                             }
                         }
@@ -418,7 +418,7 @@ namespace LocalApplication
                         lblProjectName.Text = dt.Rows[0]["ProjectName"].ToString();
                         lblSiteName.Text = dt.Rows[0]["SiteName"].ToString();
                         lblCustomerName.Text = dt.Rows[0]["CustomerName"].ToString();
-                        testingDate= dt.Rows[0]["Date"].ToString();
+                        testingDate = dt.Rows[0]["Date"].ToString();
                         manufacturer = dt.Rows[0]["ManufacturerName"].ToString();
                         var basketId = Convert.ToInt32(dt.Rows[0]["CriteriaBasketId"].ToString());
 
@@ -658,7 +658,7 @@ namespace LocalApplication
                     worksheet.Cells["A5"].Value = "SR NO.";
                     worksheet.Cells["B5"].Value = "DATE.";
 
-                    worksheet.Cells["C5"].Value = "Wattage."; 
+                    worksheet.Cells["C5"].Value = "Wattage.";
                     worksheet.Cells["D5"].Value = "Module Serial No.";
                     worksheet.Cells["E5"].Value = "Module Location";
                     worksheet.Cells["F5"].Value = "Image Number";
@@ -722,8 +722,8 @@ namespace LocalApplication
                         string imgModLocation = row["ModuleLocation"].ToString();
 
                         worksheet.Cells[rowIndex, 1].Value = counter;
-                        worksheet.Cells[rowIndex, 2].Value =Convert.ToDateTime(row["Date"]).ToString("d");
-                        
+                        worksheet.Cells[rowIndex, 2].Value = Convert.ToDateTime(row["Date"]).ToString("d");
+
                         worksheet.Cells[rowIndex, 3].Value = row["WP_Product"];
                         worksheet.Cells[rowIndex, 4].Value = row["ModuleSerialNo"];
                         worksheet.Cells[rowIndex, 5].Value = row["ModuleLocation"];
@@ -782,6 +782,12 @@ namespace LocalApplication
         private void lblMinimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnReplicate_Click(object sender, EventArgs e)
+        {
+            ImportData replicate = new ImportData(_employee);
+            replicate.ShowDialog();
         }
     }
 }

@@ -107,6 +107,7 @@
             lblClose = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             tableLayoutPanel9 = new TableLayoutPanel();
+            btnReplicate = new PictureBox();
             panel15 = new Panel();
             label15 = new Label();
             panel9 = new Panel();
@@ -145,6 +146,7 @@
             menuStrip1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)btnReplicate).BeginInit();
             panel15.SuspendLayout();
             panel9.SuspendLayout();
             SuspendLayout();
@@ -269,10 +271,10 @@
             btnRefresh.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnRefresh.Cursor = Cursors.Hand;
             btnRefresh.Image = (Image)resources.GetObject("btnRefresh.Image");
-            btnRefresh.Location = new Point(730, 14);
+            btnRefresh.Location = new Point(736, 14);
             btnRefresh.Margin = new Padding(3, 12, 3, 3);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(29, 19);
+            btnRefresh.Size = new Size(23, 19);
             btnRefresh.SizeMode = PictureBoxSizeMode.StretchImage;
             btnRefresh.TabIndex = 0;
             btnRefresh.TabStop = false;
@@ -892,7 +894,7 @@
             btnChart.BackColor = Color.Navy;
             btnChart.BackgroundImageLayout = ImageLayout.Center;
             btnChart.Cursor = Cursors.Hand;
-            btnChart.Font = new Font("Rockwell", 9F, FontStyle.Bold);
+            btnChart.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
             btnChart.ForeColor = SystemColors.ControlLightLight;
             btnChart.Location = new Point(3, 3);
             btnChart.Name = "btnChart";
@@ -927,7 +929,7 @@
             // btnDownloadChart
             // 
             btnDownloadChart.BackColor = Color.Navy;
-            btnDownloadChart.Font = new Font("Rockwell", 9F, FontStyle.Bold);
+            btnDownloadChart.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
             btnDownloadChart.ForeColor = SystemColors.ControlLightLight;
             btnDownloadChart.Location = new Point(100, 3);
             btnDownloadChart.Name = "btnDownloadChart";
@@ -1111,13 +1113,15 @@
             tableLayoutPanel9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel9.BackColor = Color.Lime;
             tableLayoutPanel9.CellBorderStyle = TableLayoutPanelCellBorderStyle.Outset;
-            tableLayoutPanel9.ColumnCount = 3;
-            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23.5955048F));
-            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 71.91012F));
-            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 4.494382F));
+            tableLayoutPanel9.ColumnCount = 4;
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.6560612F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 56.32117F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 9.011387F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 9.011387F));
+            tableLayoutPanel9.Controls.Add(btnReplicate, 2, 0);
             tableLayoutPanel9.Controls.Add(panel15, 0, 0);
             tableLayoutPanel9.Controls.Add(panel9, 0, 0);
-            tableLayoutPanel9.Controls.Add(btnRefresh, 2, 0);
+            tableLayoutPanel9.Controls.Add(btnRefresh, 3, 0);
             tableLayoutPanel9.Location = new Point(4, 54);
             tableLayoutPanel9.Name = "tableLayoutPanel9";
             tableLayoutPanel9.RowCount = 1;
@@ -1125,14 +1129,28 @@
             tableLayoutPanel9.Size = new Size(764, 38);
             tableLayoutPanel9.TabIndex = 51;
             // 
+            // btnReplicate
+            // 
+            btnReplicate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnReplicate.Cursor = Cursors.Hand;
+            btnReplicate.Image = (Image)resources.GetObject("btnReplicate.Image");
+            btnReplicate.Location = new Point(660, 14);
+            btnReplicate.Margin = new Padding(3, 12, 3, 3);
+            btnReplicate.Name = "btnReplicate";
+            btnReplicate.Size = new Size(27, 19);
+            btnReplicate.SizeMode = PictureBoxSizeMode.StretchImage;
+            btnReplicate.TabIndex = 20;
+            btnReplicate.TabStop = false;
+            btnReplicate.Click += btnReplicate_Click;
+            // 
             // panel15
             // 
             panel15.Controls.Add(label15);
             panel15.Controls.Add(lblProjectName);
             panel15.Dock = DockStyle.Fill;
-            panel15.Location = new Point(185, 5);
+            panel15.Location = new Point(200, 5);
             panel15.Name = "panel15";
-            panel15.Size = new Size(537, 28);
+            panel15.Size = new Size(418, 28);
             panel15.TabIndex = 19;
             // 
             // label15
@@ -1150,7 +1168,7 @@
             panel9.Dock = DockStyle.Fill;
             panel9.Location = new Point(5, 5);
             panel9.Name = "panel9";
-            panel9.Size = new Size(172, 28);
+            panel9.Size = new Size(187, 28);
             panel9.TabIndex = 18;
             // 
             // label14
@@ -1165,7 +1183,7 @@
             // 
             lblMinimize.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblMinimize.Cursor = Cursors.Hand;
-            lblMinimize.Font = new Font("Algerian", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMinimize.Font = new Font("Microsoft Sans Serif", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblMinimize.ForeColor = Color.LightSlateGray;
             lblMinimize.Location = new Point(702, 16);
             lblMinimize.Name = "lblMinimize";
@@ -1239,6 +1257,7 @@
             menuStrip1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)btnReplicate).EndInit();
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
             panel9.ResumeLayout(false);
@@ -1333,5 +1352,6 @@
         private Panel panel15;
         private Label label15;
         private Label lblMinimize;
+        private PictureBox btnReplicate;
     }
 }

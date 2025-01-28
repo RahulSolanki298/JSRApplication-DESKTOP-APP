@@ -57,6 +57,10 @@ namespace LocalApplication.DTO
         public DateTime? RegisterDate { get; set; }
 
         public DateTime? ExpiryDate { get; set; }
+
+        public string ReplicateId { get; set; }
+
+        public string ReplicateStatus { get; set; }
     }
 
     public class CompanySoftwareVM

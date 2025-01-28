@@ -25,7 +25,7 @@
 
         public const string StartUpload = "StartUpload";
 
-        public const string ApiUrlBasePath = "https://localhost:44317";
-       // public const string ApiUrlBasePath = "https://el.jsr-renewables.com";
+       // public const string ApiUrlBasePath = "https://localhost:44317";
+        public const string ApiUrlBasePath = "https://el.jsr-renewables.com";
     }
 }

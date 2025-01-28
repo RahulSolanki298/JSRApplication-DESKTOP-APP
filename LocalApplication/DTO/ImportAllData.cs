@@ -2,6 +2,7 @@
 {
     public class ImportAllData
     {
+        public CompanyVM Company { get; set; }
         public List<SiteVM> SiteList { get; set; }
         public List<CompanyEmployeeVM> CompanyEmployeeList { get; set; }
         public List<CompanyCustomerVM> CompanyCustomerList { get; set; }
